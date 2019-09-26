@@ -2,12 +2,17 @@
 Simple one-line scripts to extract reliable MFCC features with librosa and store in HDF5 format file.
 
 ## Requirements
-```
+- librosa
+- tqdm
+- h5py
+
+install them by:
+```bash
 pip install -r requirements.txt
 ```
 
 ## Usage
-```
+```bash
 usage: extractor.py [-h] --dir DIR --to TO [--feature FEATURE] [--dim DIM]
                     [--window_size WINDOW_SIZE] [--stride STRIDE]
                     [--cmvn CMVN] [--delta DELTA] [--d_delta D_DELTA]
@@ -34,7 +39,7 @@ optional arguments:
 - download the audio files into one directory (the audio files can be placed in many subdirectories or mixed with other non-audio files)
 - e.g. download LibriSpeech audios from http://www.openslr.org/12 and unzip all file to one dir `LibriSpeech/`
 - run 
-```
+```bash
 python extractor.py --dir LibriSpeech --to MFCC-960-librispeech.hdf5
 ```
 all mfcc features will be stored in `MFCC-960-librispeech.hdf5`.
@@ -48,7 +53,7 @@ I have extract mfcc feature for:
 with default arguments use `extractor.py` and upload it to google drive.
 
 You can download it by:
-```
+```bash
 bash download_librispeech-960hr.sh
 ```
 
