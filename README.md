@@ -1,5 +1,5 @@
 # MFCC extractor
-Simple one-line scripts to extract reliable MFCC features from librosa into HDF5 format file.
+Simple one-line scripts to extract reliable MFCC features with librosa and store in HDF5 format file.
 
 ## Requirements
 ```
@@ -30,10 +30,9 @@ optional arguments:
   --d_delta D_DELTA     set to 1 to add delta-delta, else 0. (default 1)
 ```
 
-## Example
-### Extract features for LibriSpeech
-- download audio files from http://www.openslr.org/12
-- unzip all file to one dir e.g. `LibriSpeech/`
+### Extract features
+- download the audio files into one directory (the audio files can be placed in many subdirectories or mixed with other non-audio files)
+- e.g. download LibriSpeech audios from http://www.openslr.org/12 and unzip all file to one dir `LibriSpeech/`
 - run 
 ```
 python extractor.py --dir LibriSpeech --to MFCC-960-librispeech.hdf5
@@ -65,7 +64,7 @@ dataset = MfccDataset("MFCC-960-librispeech.hdf5")
 def padding_fn(tensor_list):
     lens = [len(x) for x in tensor_list]
     max_len = max(lens)
-    # you can sort tensors by length here, if you want to use pack sequence for RNNs before pytorch-1.1
+    # you can sort tensors by length here, if you want to use pack sequence for RNNs for old torch version
     ret = []
     for array in tensor_list:
         ret.append(torch.cat((array, torch.zeros(max_len - len(array), array.shape[-1], device=array.device, dtype=array.dtype)), dim=0).unsqueeze(0))
@@ -75,7 +74,7 @@ def padding_fn(tensor_list):
 from torch.utils.data import DataLoader
 dataloader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=0, collate_fn=padding_fn)
 
-# iterate
+# iterate over batches
 for batch in dataloader:
     print("batch shape:", batch[0].shape)
     print("sequence length", batch[1])
