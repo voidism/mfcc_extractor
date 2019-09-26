@@ -56,6 +56,7 @@ You can download it by:
 ```bash
 bash download_librispeech-960hr.sh
 ```
+> warning: the file size is about 50G.
 
 ## Create dataset and dataloader for extracted hdf5 file
 
